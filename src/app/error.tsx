@@ -1,0 +1,2 @@
+"use client";
+export default function Error({ reset }: { error: Error & { digest?: string }; reset: () => void }) { return <main id="main-content" className="grid min-h-screen place-items-center px-6"><div role="alert" className="max-w-md rounded-3xl bg-white p-8 text-center shadow-soft"><h1 className="text-2xl font-bold">Something went wrong</h1><p className="mt-3 text-slate-600">Your saved information was not changed. Try again.</p><button onClick={reset} className="mt-6 rounded-xl bg-ink px-5 py-3 font-bold text-white">Try again</button></div></main>; }

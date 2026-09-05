@@ -1,0 +1,7 @@
+import { describe, expect, it } from 'vitest';
+import { draftFromOcr } from './pipeline';
+import type { MedicalReport } from '@/features/reports/types';
+import type { OcrLayout } from './types';
+const report = { reportId: 'r1', patientId: 'p1', ownerId: 'u1', originalFilename: 'cbc.pdf', storagePath: 'patients/p1/reports/r1/original', mimeType: 'application/pdf', size: 10, hash: 'a'.repeat(64), uploadedBy: 'u1', uploadedAt: '2026-01-01T00:00:00.000Z', processingStatus: 'UPLOADED', pageCount: 1 } as MedicalReport;
+const ocr: OcrLayout = { text: 'Complete Blood Count\nHemoglobin 10.8 g/dL 12 - 15\nPlatelet 200 150 - 400', pages: [{ pageNumber: 1, text: 'Complete Blood Count\nHemoglobin 10.8 g/dL 12 - 15\nPlatelet 200 150 - 400' }], tables: [], processedAt: '2026-01-01T00:00:00.000Z', extractionMethod: 'GOOGLE_DOCUMENT_AI' };
+describe('deterministic draft extraction', () => { it('classifies source text and preserves evidence for each parsed value', () => { const draft = draftFromOcr(report, ocr); expect(draft.reportType).toBe('CBC'); expect(draft.reportTypeConfidence).toBe('HIGH'); expect(draft.observations).toHaveLength(2); expect(draft.observations[0].provenance).toMatchObject({ reportId: 'r1', pageNumber: 1, extractionMethod: 'GOOGLE_DOCUMENT_AI' }); }); it('returns unknown for ambiguous content and never invents a range', () => { const draft = draftFromOcr(report, { ...ocr, text: 'Unclear document', pages: [{ pageNumber: 1, text: 'Unclear document' }] }); expect(draft.reportType).toBe('UNKNOWN'); expect(draft.observations).toHaveLength(0); }); });

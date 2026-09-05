@@ -1,0 +1,50 @@
+{
+  "name": "medlens",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 1234",
+    "build": "next build",
+    "start": "next start --port 1234",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "dev:emulators": "node scripts/dev-emulators.mjs",
+    "emulators": "firebase emulators:start --config firebase.emulators.json --project demo-medlens --only auth,firestore,storage",
+    "test:emulators": "firebase emulators:exec --config firebase.emulators.json --project demo-medlens --only auth,firestore,storage \"node scripts/test-emulators.mjs\""
+  },
+  "dependencies": {
+    "@firebase/app-check": "^0.8.12",
+    "@google-cloud/documentai": "^10.0.0",
+    "firebase": "^11.10.0",
+    "firebase-admin": "^14.3.0",
+    "next": "^15.5.25",
+    "pdf-lib": "^1.17.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "server-only": "^0.0.1",
+    "sharp": "^0.35.4",
+    "zod": "^3.25.67"
+  },
+  "overrides": {
+    "postcss": "$postcss",
+    "glob@>=10.2.0 <10.5.0": "^10.5.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^22.15.30",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.4.1",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^15.5.25",
+    "firebase-tools": "^15.29.0",
+    "jsdom": "^26.1.0",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.4"
+  }
+}

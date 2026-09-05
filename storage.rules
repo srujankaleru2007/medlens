@@ -1,0 +1,8 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Deny direct uploads/downloads and Firebase download-token creation.
+    // Private originals are served only after server-side authorization.
+    match /{allPaths=**} { allow read, write: if false; }
+  }
+}
